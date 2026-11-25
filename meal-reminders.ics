@@ -1,0 +1,1068 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Fuel//Meal reminders//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Meal plan
+X-WR-CALDESC:Meal reminders from Fuel\, built for about 1\,800 kcal a day.
+BEGIN:VEVENT
+UID:fuel-00-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261207T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Protein overnight oats
+DESCRIPTION:About 420 kcal and 37 g protein.\n\n- ½ cup rolled oats\n- 1 s
+ coop whey protein\n- ¾ cup 1% milk\n- 1 tsp chia seeds\n- ½ medium banan
+ a\, sliced\n\nStir the oats\, protein powder\, milk and chia together in a
+  jar. Refrigerate overnight. Top with the banana.\n\nLog it in Fuel after 
+ you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Protein overnight oats
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-00-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261207T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Turkey and hummus wrap with yogurt
+DESCRIPTION:About 500 kcal and 47 g protein.\n\n- 1 whole-wheat tortilla (8
+  inch)\n- 4 oz deli turkey breast\n- 3 tbsp hummus\n- a handful of lettuce
+ \n- a few tomato slices\n- a few cucumber slices\n- ¾ cup nonfat plain Gr
+ eek yogurt\n- ⅔ cup strawberries\n\nSpread the hummus on the tortilla\, 
+ layer on the turkey and vegetables\, and roll up. Yogurt and berries on th
+ e side.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Turkey and hummus wrap with yogurt
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-00-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261207T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Yogurt parfait with oats
+DESCRIPTION:About 305 kcal and 29 g protein.\n\n- 1 cup nonfat plain Greek 
+ yogurt\n- ⅔ cup blueberries\n- ⅓ cup rolled oats\n\nLayer in a bowl or
+  jar. Toast the oats in a dry pan first if you like them crunchy.\n\nLog i
+ t in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Yogurt parfait with oats
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-00-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261207T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Sheet-pan lemon chicken with potatoes and green beans
+DESCRIPTION:About 575 kcal and 48 g protein.\n\n- 6½ oz chicken breast (ra
+ w weight)\n- 9 oz baby potatoes\, halved\n- 1½ cups green beans\n- 1 tbsp
+  olive oil\n\nToss everything with the oil\, lemon\, garlic\, salt and pep
+ per. Roast at 425°F: potatoes alone for 15 minutes\, then add the chicken
+  and beans for 20 more.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Sheet-pan lemon chicken with potatoes and green beans
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-01-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261208T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Veggie egg scramble with toast
+DESCRIPTION:About 405 kcal and 37 g protein.\n\n- 2 large eggs\n- ⅔ cup l
+ iquid egg whites\n- 2 cups spinach\n- ⅓ bell pepper\, diced\n- 1 tsp oli
+ ve oil\n- 1 slice whole-wheat toast\n- ⅔ cup strawberries\n\nSoften the 
+ pepper in the oil\, wilt the spinach\, then scramble in the eggs and white
+ s. Serve with the toast and berries.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Veggie egg scramble with toast
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-01-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261208T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Greek chicken salad
+DESCRIPTION:About 520 kcal and 55 g protein.\n\n- 5 oz cooked chicken breas
+ t\, sliced\n- 2½ cups chopped romaine\n- ½ small cucumber\, chopped\n- 1
+  small tomato\, chopped\n- 1 oz crumbled feta (3 tbsp)\n- ⅓ cup chickpea
+ s\, rinsed\n- 2 tsp olive oil\n\nToss everything with the oil\, a squeeze 
+ of lemon\, oregano\, salt and pepper.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Greek chicken salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-01-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261208T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Protein shake\, an apple and string cheese
+DESCRIPTION:About 295 kcal and 32 g protein.\n\n- 1 scoop whey protein\, sh
+ aken with water\n- 1 medium apple\n- 1 string cheese\n\nShake the protein 
+ with cold water.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Protein shake\, an apple and string cheese
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-01-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261208T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Turkey tacos
+DESCRIPTION:About 605 kcal and 43 g protein.\n\n- 3 corn tortillas (6 inch)
+ \n- 5 oz 93% lean ground turkey (raw weight)\n- 2 tsp taco seasoning\n- 1 
+ cup shredded lettuce\n- ½ tomato\, diced\n- 3 tbsp salsa\n- 3 tbsp reduce
+ d-fat shredded cheese\n- ¼ small avocado\, diced\n- ⅓ cup black beans\,
+  on the side\n\nBrown the turkey with the seasoning and a splash of water.
+  Warm the tortillas and build the tacos.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Turkey tacos
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-02-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261125T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Greek yogurt power bowl
+DESCRIPTION:About 385 kcal and 31 g protein.\n\n- 1 cup nonfat plain Greek 
+ yogurt\n- ⅔ cup blueberries\n- ⅓ cup rolled oats\n- 1 tbsp chia seeds\
+ n- 1 tsp honey\n\nStir the oats and chia into the yogurt and top with the 
+ berries and honey.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Greek yogurt power bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-02-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261125T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Turkey chili
+DESCRIPTION:About 485 kcal and 41 g protein.\n\n- 5 oz 93% lean ground turk
+ ey (raw weight)\n- ⅔ cup kidney or black beans\, rinsed\n- ⅔ cup canne
+ d diced tomatoes\n- ⅓ onion\, diced\n- ⅓ bell pepper\, diced\n- 1 tsp 
+ olive oil\n- 3 tbsp reduced-fat shredded cheese\n\nBrown the turkey with t
+ he onion and pepper in the oil. Add the tomatoes\, beans\, chili powder an
+ d cumin\, and simmer 20 minutes. Top with the cheese. Cook four portions a
+ t once\; it reheats well.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Turkey chili
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-02-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261125T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Yogurt parfait with oats
+DESCRIPTION:About 305 kcal and 29 g protein.\n\n- 1 cup nonfat plain Greek 
+ yogurt\n- ⅔ cup blueberries\n- ⅓ cup rolled oats\n\nLayer in a bowl or
+  jar. Toast the oats in a dry pan first if you like them crunchy.\n\nLog i
+ t in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Yogurt parfait with oats
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-02-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261125T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Baked salmon with brown rice and broccoli
+DESCRIPTION:About 585 kcal and 43 g protein.\n\n- 6 oz salmon fillet (raw w
+ eight)\n- ½ cup cooked brown rice\n- 2 cups broccoli florets\n- 1 tsp oli
+ ve oil\n\nBake the salmon at 400°F for 12 to 15 minutes with lemon\, salt
+  and pepper. Roast or steam the broccoli with the oil.\n\nLog it in Fuel a
+ fter you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Baked salmon with brown rice and broccoli
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-03-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261126T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Banana oat protein shake
+DESCRIPTION:About 385 kcal and 35 g protein.\n\n- 1 scoop whey protein\n- 1
+  medium banana\n- ¼ cup rolled oats\n- ¾ cup 1% milk\n- 1 cup spinach\n\
+ nBlend with a cup of ice until smooth.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Banana oat protein shake
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-03-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261126T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Chicken burrito bowl
+DESCRIPTION:About 520 kcal and 54 g protein.\n\n- 5 oz cooked chicken breas
+ t\, diced\n- ½ cup cooked brown rice\n- ½ cup black beans\, rinsed\n- ¼
+  cup salsa\n- ¼ small avocado\, diced\n- 1 cup shredded lettuce\n\nLayer 
+ the rice\, beans and chicken over the lettuce. Top with salsa and avocado.
+ \n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Chicken burrito bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-03-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261126T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Hard-boiled eggs\, an apple and string cheese
+DESCRIPTION:About 320 kcal and 20 g protein.\n\n- 2 hard-boiled eggs\n- 1 m
+ edium apple\n- 1 string cheese\n\nBoil a batch of eggs on Sunday and keep 
+ them in the fridge.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Hard-boiled eggs\, an apple and string cheese
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-03-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261126T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Spaghetti with turkey meat sauce and side salad
+DESCRIPTION:About 580 kcal and 40 g protein.\n\n- 2¼ oz whole-wheat spaghe
+ tti (dry weight)\n- 5 oz 93% lean ground turkey (raw weight)\n- ½ cup mar
+ inara sauce\n- 2 cups salad greens\n- 1 tsp olive oil\, with vinegar\n- 1 
+ tbsp grated parmesan\n\nBrown the turkey\, add the marinara and simmer whi
+ le the pasta cooks. Dress the salad with the oil and vinegar.\n\nLog it in
+  Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Spaghetti with turkey meat sauce and side salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-04-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261127T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Cottage cheese and berries with egg on toast
+DESCRIPTION:About 385 kcal and 35 g protein.\n\n- 1 cup 2% cottage cheese\n
+ - 1 cup strawberries\n- 1 slice whole-wheat toast\n- 1 large egg\, fried i
+ n a nonstick pan or boiled\n\nCook the egg and set it on the toast. Top th
+ e cottage cheese with the berries.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Cottage cheese and berries with egg on toast
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-04-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261127T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Tuna salad sandwich with carrots and an apple
+DESCRIPTION:About 525 kcal and 41 g protein.\n\n- 2 slices whole-wheat brea
+ d\n- 1 can (5 oz) tuna in water\, drained\n- 1 tbsp light mayonnaise\n- 2 
+ tbsp nonfat plain Greek yogurt\n- 10 baby carrots\n- 1 string cheese\n- 1 
+ medium apple\n\nMix the tuna with the mayonnaise\, yogurt\, pepper and a l
+ ittle mustard\, and make the sandwich. Carrots\, cheese and apple on the s
+ ide.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Tuna salad sandwich with carrots and an apple
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-04-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261127T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Protein shake\, an apple and string cheese
+DESCRIPTION:About 295 kcal and 32 g protein.\n\n- 1 scoop whey protein\, sh
+ aken with water\n- 1 medium apple\n- 1 string cheese\n\nShake the protein 
+ with cold water.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Protein shake\, an apple and string cheese
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-04-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261127T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Chicken pita pizza with salad
+DESCRIPTION:About 580 kcal and 54 g protein.\n\n- 1 whole-wheat pita (6½ i
+ nch)\n- ¼ cup marinara sauce\n- ½ cup shredded part-skim mozzarella\n- 3
+ ½ oz cooked chicken breast\, shredded\n- 2 mushrooms\, sliced\n- a few st
+ rips of bell pepper\n- 2 cups salad greens\n- 1 tsp olive oil\, with vineg
+ ar\n\nTop the pita with the sauce\, chicken\, vegetables and cheese. Bake 
+ at 425°F for 8 to 10 minutes. Salad on the side.\n\nLog it in Fuel after 
+ you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Chicken pita pizza with salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-05-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261128T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Breakfast burrito
+DESCRIPTION:About 390 kcal and 33 g protein.\n\n- 1 whole-wheat tortilla (8
+  inch)\n- 1 large egg\n- ½ cup liquid egg whites\n- ⅓ cup black beans\,
+  rinsed\n- 3 tbsp reduced-fat shredded cheese\n- 2 tbsp salsa\n\nScramble 
+ the egg with the whites\, warm the beans\, and roll everything up in the t
+ ortilla.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Breakfast burrito
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-05-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261128T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Chicken\, quinoa and roasted vegetable bowl
+DESCRIPTION:About 525 kcal and 51 g protein.\n\n- 4½ oz cooked chicken bre
+ ast\n- ¾ cup cooked quinoa\n- 1 cup broccoli florets\n- ½ small zucchini
+ \, sliced\n- ⅓ bell pepper\, sliced\n- 2 tsp olive oil\n\nRoast the vege
+ tables in the oil at 425°F for 20 minutes. Serve over the quinoa with the
+  chicken. Good for batch cooking.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Chicken\, quinoa and roasted vegetable bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-05-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261128T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Turkey roll-ups\, string cheese and an apple
+DESCRIPTION:About 260 kcal and 23 g protein.\n\n- 3 oz deli turkey breast\n
+ - 1 string cheese\n- 1 medium apple\n\nRoll the turkey around the cheese\,
+  with mustard if you like.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Turkey roll-ups\, string cheese and an apple
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-05-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261128T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Lean burger with sweet potato wedges
+DESCRIPTION:About 595 kcal and 42 g protein.\n\n- ⅓ lb 93% lean ground be
+ ef patty (raw weight)\n- 1 whole-wheat bun\n- 1 medium sweet potato (6 oz)
+ \, cut in wedges\n- 1 tsp olive oil\n- lettuce\, plus a side of greens\n- 
+ tomato slices\n- 1 tbsp ketchup\n\nToss the wedges in the oil and roast at
+  425°F for 25 minutes. Grill or pan-sear the patty about 4 minutes a side
+ .\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Lean burger with sweet potato wedges
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-06-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261129T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Avocado egg toast
+DESCRIPTION:About 400 kcal and 33 g protein.\n\n- 2 slices whole-wheat toas
+ t\n- ¼ avocado\, mashed\n- 1 large egg\n- ⅔ cup liquid egg whites\n- 1 
+ small tomato\, sliced\n\nScramble the egg with the whites. Spread the avoc
+ ado on the toast and top with the eggs and tomato.\n\nLog it in Fuel after
+  you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Avocado egg toast
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-06-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261129T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Turkey taco salad
+DESCRIPTION:About 510 kcal and 43 g protein.\n\n- 5 oz 93% lean ground turk
+ ey (raw weight)\n- 2 tsp taco seasoning\n- 2 cups chopped romaine\n- ⅓ c
+ up black beans\, rinsed\n- ⅓ cup corn kernels\n- ½ tomato\, diced\n- ¼
+  cup salsa\n- 3 tbsp reduced-fat shredded cheese\n- 2 tbsp nonfat plain Gr
+ eek yogurt\, as sour cream\n- ¼ small avocado\, diced\n\nBrown the turkey
+  with the seasoning. Pile it over the lettuce with everything else. The sa
+ lsa is the dressing.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Turkey taco salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-06-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261129T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Yogurt parfait with oats
+DESCRIPTION:About 305 kcal and 29 g protein.\n\n- 1 cup nonfat plain Greek 
+ yogurt\n- ⅔ cup blueberries\n- ⅓ cup rolled oats\n\nLayer in a bowl or
+  jar. Toast the oats in a dry pan first if you like them crunchy.\n\nLog i
+ t in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Yogurt parfait with oats
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-06-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261129T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Sirloin steak with baked potato and green beans
+DESCRIPTION:About 575 kcal and 47 g protein.\n\n- 6 oz top sirloin steak\, 
+ trimmed (raw weight)\n- 1 large russet potato (9 oz)\n- 2 tbsp nonfat plai
+ n Greek yogurt\, as sour cream\n- 1½ cups green beans\n- 2 tsp olive oil\
+ n\nBake or microwave the potato. Sear the steak 3 to 4 minutes a side and 
+ rest it 5 minutes. Sauté the beans in the oil with garlic.\n\nLog it in F
+ uel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Sirloin steak with baked potato and green beans
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-07-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261130T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Protein overnight oats
+DESCRIPTION:About 420 kcal and 37 g protein.\n\n- ½ cup rolled oats\n- 1 s
+ coop whey protein\n- ¾ cup 1% milk\n- 1 tsp chia seeds\n- ½ medium banan
+ a\, sliced\n\nStir the oats\, protein powder\, milk and chia together in a
+  jar. Refrigerate overnight. Top with the banana.\n\nLog it in Fuel after 
+ you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Protein overnight oats
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-07-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261130T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Tuna salad sandwich with carrots and an apple
+DESCRIPTION:About 525 kcal and 41 g protein.\n\n- 2 slices whole-wheat brea
+ d\n- 1 can (5 oz) tuna in water\, drained\n- 1 tbsp light mayonnaise\n- 2 
+ tbsp nonfat plain Greek yogurt\n- 10 baby carrots\n- 1 string cheese\n- 1 
+ medium apple\n\nMix the tuna with the mayonnaise\, yogurt\, pepper and a l
+ ittle mustard\, and make the sandwich. Carrots\, cheese and apple on the s
+ ide.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Tuna salad sandwich with carrots and an apple
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-07-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261130T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Edamame and string cheese
+DESCRIPTION:About 260 kcal and 25 g protein.\n\n- 1 cup shelled edamame\n- 
+ 1 string cheese\n\nMicrowave frozen edamame for 2 minutes and salt lightly
+ .\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Edamame and string cheese
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-07-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261130T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Teriyaki chicken stir-fry
+DESCRIPTION:About 590 kcal and 50 g protein.\n\n- 6 oz chicken breast\, sli
+ ced (raw weight)\n- 2½ cups plain frozen stir-fry vegetables (no sauce pa
+ cket)\n- 1 cup cooked white rice\n- 2 tbsp teriyaki sauce\n- 1½ tsp cooki
+ ng oil\n\nStir-fry the chicken in the oil until cooked through\, add the v
+ egetables for 4 minutes\, then the sauce. Serve over the rice.\n\nLog it i
+ n Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Teriyaki chicken stir-fry
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-08-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261201T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Veggie egg scramble with toast
+DESCRIPTION:About 405 kcal and 37 g protein.\n\n- 2 large eggs\n- ⅔ cup l
+ iquid egg whites\n- 2 cups spinach\n- ⅓ bell pepper\, diced\n- 1 tsp oli
+ ve oil\n- 1 slice whole-wheat toast\n- ⅔ cup strawberries\n\nSoften the 
+ pepper in the oil\, wilt the spinach\, then scramble in the eggs and white
+ s. Serve with the toast and berries.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Veggie egg scramble with toast
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-08-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261201T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Chicken\, quinoa and roasted vegetable bowl
+DESCRIPTION:About 525 kcal and 51 g protein.\n\n- 4½ oz cooked chicken bre
+ ast\n- ¾ cup cooked quinoa\n- 1 cup broccoli florets\n- ½ small zucchini
+ \, sliced\n- ⅓ bell pepper\, sliced\n- 2 tsp olive oil\n\nRoast the vege
+ tables in the oil at 425°F for 20 minutes. Serve over the quinoa with the
+  chicken. Good for batch cooking.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Chicken\, quinoa and roasted vegetable bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-08-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261201T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Turkey roll-ups\, string cheese and an apple
+DESCRIPTION:About 260 kcal and 23 g protein.\n\n- 3 oz deli turkey breast\n
+ - 1 string cheese\n- 1 medium apple\n\nRoll the turkey around the cheese\,
+  with mustard if you like.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Turkey roll-ups\, string cheese and an apple
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-08-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261201T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Turkey tacos
+DESCRIPTION:About 605 kcal and 43 g protein.\n\n- 3 corn tortillas (6 inch)
+ \n- 5 oz 93% lean ground turkey (raw weight)\n- 2 tsp taco seasoning\n- 1 
+ cup shredded lettuce\n- ½ tomato\, diced\n- 3 tbsp salsa\n- 3 tbsp reduce
+ d-fat shredded cheese\n- ¼ small avocado\, diced\n- ⅓ cup black beans\,
+  on the side\n\nBrown the turkey with the seasoning and a splash of water.
+  Warm the tortillas and build the tacos.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Turkey tacos
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-09-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261202T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Greek yogurt power bowl
+DESCRIPTION:About 385 kcal and 31 g protein.\n\n- 1 cup nonfat plain Greek 
+ yogurt\n- ⅔ cup blueberries\n- ⅓ cup rolled oats\n- 1 tbsp chia seeds\
+ n- 1 tsp honey\n\nStir the oats and chia into the yogurt and top with the 
+ berries and honey.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Greek yogurt power bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-09-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261202T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Turkey chili
+DESCRIPTION:About 485 kcal and 41 g protein.\n\n- 5 oz 93% lean ground turk
+ ey (raw weight)\n- ⅔ cup kidney or black beans\, rinsed\n- ⅔ cup canne
+ d diced tomatoes\n- ⅓ onion\, diced\n- ⅓ bell pepper\, diced\n- 1 tsp 
+ olive oil\n- 3 tbsp reduced-fat shredded cheese\n\nBrown the turkey with t
+ he onion and pepper in the oil. Add the tomatoes\, beans\, chili powder an
+ d cumin\, and simmer 20 minutes. Top with the cheese. Cook four portions a
+ t once\; it reheats well.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Turkey chili
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-09-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261202T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Yogurt parfait with oats
+DESCRIPTION:About 305 kcal and 29 g protein.\n\n- 1 cup nonfat plain Greek 
+ yogurt\n- ⅔ cup blueberries\n- ⅓ cup rolled oats\n\nLayer in a bowl or
+  jar. Toast the oats in a dry pan first if you like them crunchy.\n\nLog i
+ t in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Yogurt parfait with oats
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-09-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261202T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Baked cod with roasted potatoes and asparagus
+DESCRIPTION:About 585 kcal and 48 g protein.\n\n- 7 oz cod fillet (raw weig
+ ht)\n- 10½ oz potatoes\, cubed\n- 9 asparagus spears\n- 1 tbsp olive oil\
+ n- 2 tbsp grated parmesan\n\nRoast the potatoes in half the oil at 425°F 
+ for 20 minutes. Add the cod and asparagus with the rest of the oil and roa
+ st 12 minutes more. Parmesan over the asparagus.\n\nLog it in Fuel after y
+ ou eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Baked cod with roasted potatoes and asparagus
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-10-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261203T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Banana oat protein shake
+DESCRIPTION:About 385 kcal and 35 g protein.\n\n- 1 scoop whey protein\n- 1
+  medium banana\n- ¼ cup rolled oats\n- ¾ cup 1% milk\n- 1 cup spinach\n\
+ nBlend with a cup of ice until smooth.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Banana oat protein shake
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-10-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261203T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Turkey taco salad
+DESCRIPTION:About 510 kcal and 43 g protein.\n\n- 5 oz 93% lean ground turk
+ ey (raw weight)\n- 2 tsp taco seasoning\n- 2 cups chopped romaine\n- ⅓ c
+ up black beans\, rinsed\n- ⅓ cup corn kernels\n- ½ tomato\, diced\n- ¼
+  cup salsa\n- 3 tbsp reduced-fat shredded cheese\n- 2 tbsp nonfat plain Gr
+ eek yogurt\, as sour cream\n- ¼ small avocado\, diced\n\nBrown the turkey
+  with the seasoning. Pile it over the lettuce with everything else. The sa
+ lsa is the dressing.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Turkey taco salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-10-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261203T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Cottage cheese with strawberries and banana
+DESCRIPTION:About 320 kcal and 26 g protein.\n\n- 1 cup 2% cottage cheese\n
+ - 1 cup strawberries\n- 1 small banana\, sliced\n\nTop the cottage cheese 
+ with the fruit.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Cottage cheese with strawberries and banana
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-10-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261203T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Baked chicken parmesan with pasta and salad
+DESCRIPTION:About 605 kcal and 56 g protein.\n\n- 6 oz chicken breast\, pou
+ nded thin (raw weight)\n- ¼ cup panko breadcrumbs\n- ½ cup marinara sauc
+ e\n- ¼ cup shredded part-skim mozzarella\n- 1½ oz whole-wheat pasta (dry
+  weight)\n- 2 cups salad greens\n- 1 tsp olive oil\, with vinegar\n\nPress
+  the chicken into the panko and bake at 425°F for 15 minutes. Top with ha
+ lf the sauce and the cheese and bake 5 more. Toss the pasta with the rest 
+ of the sauce.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Baked chicken parmesan with pasta and salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-11-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261204T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Cottage cheese and berries with egg on toast
+DESCRIPTION:About 385 kcal and 35 g protein.\n\n- 1 cup 2% cottage cheese\n
+ - 1 cup strawberries\n- 1 slice whole-wheat toast\n- 1 large egg\, fried i
+ n a nonstick pan or boiled\n\nCook the egg and set it on the toast. Top th
+ e cottage cheese with the berries.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Cottage cheese and berries with egg on toast
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-11-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261204T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Greek chicken salad
+DESCRIPTION:About 520 kcal and 55 g protein.\n\n- 5 oz cooked chicken breas
+ t\, sliced\n- 2½ cups chopped romaine\n- ½ small cucumber\, chopped\n- 1
+  small tomato\, chopped\n- 1 oz crumbled feta (3 tbsp)\n- ⅓ cup chickpea
+ s\, rinsed\n- 2 tsp olive oil\n\nToss everything with the oil\, a squeeze 
+ of lemon\, oregano\, salt and pepper.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Greek chicken salad
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-11-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261204T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Hard-boiled eggs\, an apple and string cheese
+DESCRIPTION:About 320 kcal and 20 g protein.\n\n- 2 hard-boiled eggs\n- 1 m
+ edium apple\n- 1 string cheese\n\nBoil a batch of eggs on Sunday and keep 
+ them in the fridge.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Hard-boiled eggs\, an apple and string cheese
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-11-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261204T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Egg roll in a bowl
+DESCRIPTION:About 590 kcal and 46 g protein.\n\n- 6 oz 93% lean ground turk
+ ey (raw weight)\n- 3 cups coleslaw mix\n- 1 tbsp soy sauce\n- 1 tsp sesame
+  oil\n- ¾ cup cooked white rice\n- 1 large egg\n\nBrown the turkey with g
+ arlic and ginger. Add the coleslaw mix and soy sauce and cook until just t
+ ender. Push it aside\, scramble in the egg\, and finish with the sesame oi
+ l. Serve over the rice.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Egg roll in a bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-12-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261205T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Breakfast burrito
+DESCRIPTION:About 390 kcal and 33 g protein.\n\n- 1 whole-wheat tortilla (8
+  inch)\n- 1 large egg\n- ½ cup liquid egg whites\n- ⅓ cup black beans\,
+  rinsed\n- 3 tbsp reduced-fat shredded cheese\n- 2 tbsp salsa\n\nScramble 
+ the egg with the whites\, warm the beans\, and roll everything up in the t
+ ortilla.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Breakfast burrito
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-12-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261205T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Chicken burrito bowl
+DESCRIPTION:About 520 kcal and 54 g protein.\n\n- 5 oz cooked chicken breas
+ t\, diced\n- ½ cup cooked brown rice\n- ½ cup black beans\, rinsed\n- ¼
+  cup salsa\n- ¼ small avocado\, diced\n- 1 cup shredded lettuce\n\nLayer 
+ the rice\, beans and chicken over the lettuce. Top with salsa and avocado.
+ \n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Chicken burrito bowl
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-12-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261205T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Protein shake\, an apple and string cheese
+DESCRIPTION:About 295 kcal and 32 g protein.\n\n- 1 scoop whey protein\, sh
+ aken with water\n- 1 medium apple\n- 1 string cheese\n\nShake the protein 
+ with cold water.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Protein shake\, an apple and string cheese
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-12-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261205T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Beef and broccoli stir-fry
+DESCRIPTION:About 580 kcal and 47 g protein.\n\n- 6 oz top sirloin\, thinly
+  sliced (raw weight)\n- 2 cups broccoli florets\n- ¾ cup cooked white ric
+ e\n- 1 tbsp soy sauce\n- 2 tsp cooking oil\n- 1 tsp honey\n- 1 tsp cornsta
+ rch\n\nMix the soy sauce\, honey and cornstarch with ¼ cup water. Sear th
+ e beef in the oil\, add the broccoli with a splash of water and cover for 
+ 3 minutes\, then stir in the sauce until glossy. Serve over the rice.\n\nL
+ og it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Beef and broccoli stir-fry
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-13-breakfast@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261206T073000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Breakfast: Avocado egg toast
+DESCRIPTION:About 400 kcal and 33 g protein.\n\n- 2 slices whole-wheat toas
+ t\n- ¼ avocado\, mashed\n- 1 large egg\n- ⅔ cup liquid egg whites\n- 1 
+ small tomato\, sliced\n\nScramble the egg with the whites. Spread the avoc
+ ado on the toast and top with the eggs and tomato.\n\nLog it in Fuel after
+  you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Breakfast: Avocado egg toast
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-13-lunch@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261206T120000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Lunch: Turkey and hummus wrap with yogurt
+DESCRIPTION:About 500 kcal and 47 g protein.\n\n- 1 whole-wheat tortilla (8
+  inch)\n- 4 oz deli turkey breast\n- 3 tbsp hummus\n- a handful of lettuce
+ \n- a few tomato slices\n- a few cucumber slices\n- ¾ cup nonfat plain Gr
+ eek yogurt\n- ⅔ cup strawberries\n\nSpread the hummus on the tortilla\, 
+ layer on the turkey and vegetables\, and roll up. Yogurt and berries on th
+ e side.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Lunch: Turkey and hummus wrap with yogurt
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-13-snack@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261206T153000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Snack: Protein shake made with milk and a banana
+DESCRIPTION:About 300 kcal and 32 g protein.\n\n- 1 scoop whey protein\n- 
+ ¾ cup 1% milk\n- 1 medium banana\n\nShake the protein with the milk. Good
+  within an hour after training.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Snack: Protein shake made with milk and a banana
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fuel-13-dinner@fuel-meal-plan
+DTSTAMP:20261125T215908Z
+DTSTART:20261206T183000
+DURATION:PT15M
+RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=20270331T235959
+SUMMARY:Dinner: Chicken fajitas
+DESCRIPTION:About 600 kcal and 50 g protein.\n\n- 6 oz chicken breast\, sli
+ ced (raw weight)\n- 1 large bell pepper\, sliced\n- ½ large onion\, slice
+ d\n- 3 corn tortillas (6 inch)\n- 1½ tsp olive oil\n- ¼ cup salsa\n- 2 t
+ bsp nonfat plain Greek yogurt\, as sour cream\n- ¼ small avocado\, diced\
+ n\nSear the chicken in the oil with chili powder and cumin\, then cook the
+  pepper and onion until charred at the edges. Serve in warm tortillas with
+  the salsa\, yogurt and avocado.\n\nLog it in Fuel after you eat.
+TRANSP:TRANSPARENT
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Dinner: Chicken fajitas
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+END:VCALENDAR

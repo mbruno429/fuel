@@ -1,0 +1,11 @@
+{
+  "name": "fuel",
+  "private": true,
+  "type": "module",
+  "description": "Meal plan, reminders and meal log. Static site, no build step.",
+  "scripts": {
+    "test": "node --test",
+    "check-plan": "node tools/check-plan.mjs",
+    "build-reminders": "node tools/build-reminders.mjs"
+  }
+}

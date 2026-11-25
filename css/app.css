@@ -1,0 +1,1328 @@
+/* Fuel
+   The look borrows from the Nutrition Facts panel on a food package: black
+   rules of three weights, a heavy grotesque for the big numbers, values set
+   flush right. Printed things are square; things you tap are rounded.
+   One accent color, the blue of the painter's tape kitchens label food with. */
+
+@font-face {
+  font-family: "Archivo Black";
+  src: url("../fonts/ArchivoBlack-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --paper: #ffffff;
+  --plane: #eceeed;
+  --sheet: #ffffff;
+  --ink: #000000;
+  --ink-2: #565a58;
+  --rule: #d5d9d7;
+  --axis: #b9bdbb;
+  --tape: #1f66c1;
+  --tape-ink: #ffffff;
+  --tape-wash: #d8e6f8;
+  --over: #c62f2f;
+  --over-wash: #f6d9d9;
+  --plan-line: #8d918f;
+  --backdrop: rgba(0, 0, 0, 0.45);
+
+  --font-display: "Archivo Black", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gutter: 16px;
+  --tabs-height: 60px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #000000;
+    --plane: #000000;
+    --sheet: #161716;
+    --ink: #ffffff;
+    --ink-2: #a9adab;
+    --rule: #2e302f;
+    --axis: #4a4d4b;
+    --tape: #5aa0f2;
+    --tape-ink: #000000;
+    --tape-wash: #15294a;
+    --over: #ff6b6b;
+    --over-wash: #4a1717;
+    --plan-line: #7b7f7d;
+    --backdrop: rgba(0, 0, 0, 0.7);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.has-sheet {
+  overflow: hidden;
+}
+
+#app {
+  max-width: 480px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(14px + env(safe-area-inset-top)) var(--gutter) calc(var(--tabs-height) + 28px + env(safe-area-inset-bottom));
+  background: var(--paper);
+  outline: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.3rem;
+  margin: 12px 0 8px;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 20px 0 6px;
+}
+
+p {
+  margin: 0 0 10px;
+}
+
+a {
+  color: inherit;
+}
+
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--tape);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- rules: the three weights of line on a food label ---------- */
+
+.rule {
+  background: var(--ink);
+}
+
+.rule--thick {
+  height: 10px;
+  margin: 5px 0;
+}
+
+.rule--medium {
+  height: 5px;
+}
+
+/* ---------- page headings ---------- */
+
+.page-head {
+  margin-bottom: 14px;
+}
+
+.page-head h1 {
+  font-size: 2.3rem;
+}
+
+.page-head p {
+  margin: 6px 0 0;
+  color: var(--ink-2);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 44px;
+  margin: -10px 0 0 -6px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- the facts panel ---------- */
+
+.facts {
+  border: 2px solid var(--ink);
+  padding: 8px 10px 12px;
+}
+
+.facts__title {
+  font-size: clamp(2rem, 10.5vw, 2.7rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.facts__line {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.facts__line--split {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.facts__amount {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.facts__calories {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.facts__calories-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+.facts__calories-label svg {
+  width: 26px;
+  height: 26px;
+}
+
+.facts__calories-value {
+  font-size: clamp(3rem, 16vw, 3.9rem);
+  letter-spacing: -0.03em;
+}
+
+.facts__calories.is-over {
+  color: var(--over);
+}
+
+.facts__dv {
+  margin: 8px 0 0;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.facts__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.facts__row:last-of-type {
+  border-bottom: 0;
+}
+
+/* ---------- meters ---------- */
+
+.meter {
+  display: block;
+  height: 6px;
+  background: var(--tape-wash);
+  overflow: hidden;
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background: var(--tape);
+  border-radius: 0 3px 3px 0;
+  transition: width 0.3s ease-out;
+}
+
+.meter--thick {
+  height: 12px;
+}
+
+.meter--thick > span {
+  border-radius: 0 4px 4px 0;
+}
+
+.meter.is-over {
+  background: var(--over-wash);
+}
+
+.meter.is-over > span {
+  background: var(--over);
+  border-radius: 0;
+}
+
+/* ---------- the day's meals ---------- */
+
+.meals {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.meal {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.meal__time {
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.meal__open {
+  display: grid;
+  gap: 2px;
+  min-height: 72px;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.meal__slot,
+.meal__nums {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.meal__name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.meal.is-next .meal__time,
+.meal.is-next .meal__slot {
+  color: var(--ink);
+}
+
+/* A strip of tape at the edge of the screen marks the meal that is due. */
+.meal.is-next::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--gutter) * -1);
+  top: 10px;
+  bottom: 10px;
+  width: 6px;
+  background: var(--tape);
+}
+
+.meal.is-done .meal__name,
+.meal.is-empty .meal__name {
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+.check {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-right: -6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.check svg {
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  color: transparent;
+}
+
+.check[aria-checked="true"] svg {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.check.is-fresh svg {
+  animation: stamp 0.18s ease-out;
+}
+
+@keyframes stamp {
+  from {
+    transform: scale(1.35);
+  }
+}
+
+.hint {
+  margin: 12px 0 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.extras {
+  margin-top: 18px;
+}
+
+.extras ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.extras li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.extras__name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.extras__nums {
+  grid-column: 1;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.extras li .icon-btn {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 700 1rem/1.2 var(--font-body);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn--primary {
+  border-color: var(--tape);
+  background: var(--tape);
+  color: var(--tape-ink);
+}
+
+.btn--danger {
+  border-color: var(--over);
+  color: var(--over);
+}
+
+.btn--wide {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.btn--file {
+  position: relative;
+}
+
+.btn--file:focus-within {
+  outline: 3px solid var(--tape);
+  outline-offset: 2px;
+}
+
+.btn--small {
+  min-height: 40px;
+  padding: 4px 14px;
+  font-size: 0.9rem;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn:active,
+.check:active svg {
+  transform: scale(0.97);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- plan screen ---------- */
+
+.rules h2 {
+  margin-top: 10px;
+}
+
+.rules ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.rules li {
+  margin-bottom: 6px;
+}
+
+.plan-day__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0 6px;
+}
+
+.plan-day__head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.plan-day__head p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.plan-day__meals {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+}
+
+.plan-day__meals button {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.plan-day__time {
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-day__note {
+  margin-left: 8px;
+  color: var(--ink-2);
+  font-size: 0.8rem;
+}
+
+/* ---------- figures set as label rows ---------- */
+
+.stats {
+  margin: 0 0 18px;
+  border-top: 5px solid var(--ink);
+}
+
+.stats div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.stats dt {
+  font-weight: 700;
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+/* ---------- log screen ---------- */
+
+.log-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.log-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 2px;
+  min-height: 60px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.log-row__date {
+  font-weight: 700;
+}
+
+.log-row__nums {
+  grid-column: 1;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.log-row__nums strong {
+  color: var(--ink);
+}
+
+.log-row .meter {
+  grid-column: 1;
+  margin-top: 4px;
+}
+
+.log-row svg {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  width: 20px;
+  height: 20px;
+  color: var(--ink-2);
+}
+
+/* ---------- progress screen ---------- */
+
+.weigh {
+  margin-bottom: 16px;
+}
+
+.weigh label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.weigh__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.weigh__unit {
+  font-weight: 700;
+}
+
+.chart {
+  margin: 0 0 18px;
+}
+
+.chart figcaption h2 {
+  margin-top: 0;
+}
+
+.chart__legend {
+  display: flex;
+  align-items: center;
+  margin: 0 0 6px;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.key {
+  display: inline-block;
+  width: 18px;
+  margin-right: 6px;
+  border-top: 2px solid var(--tape);
+}
+
+.key--plan {
+  margin-left: 16px;
+  border-color: var(--plan-line);
+}
+
+.chart__readout {
+  min-height: 2.6em;
+  margin: 0 0 2px;
+  font-size: 0.9rem;
+}
+
+.chart__readout strong {
+  font-size: 1.05rem;
+}
+
+.chart__svg {
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+  border-radius: 4px;
+}
+
+.chart__grid {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.chart__axis {
+  stroke: var(--axis);
+  stroke-width: 1;
+}
+
+.chart__tick {
+  fill: var(--ink-2);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart__plan {
+  stroke: var(--plan-line);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.chart__line {
+  fill: none;
+  stroke: var(--tape);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.chart__dot {
+  fill: var(--tape);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+
+.chart__label {
+  fill: var(--ink-2);
+  font-size: 10.5px;
+}
+
+.chart__label--strong {
+  fill: var(--ink);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.chart__cross {
+  stroke: var(--ink-2);
+  stroke-width: 1;
+}
+
+.pace {
+  margin: 0 0 20px;
+  padding: 10px 12px 12px;
+  border: 2px solid var(--ink);
+}
+
+.pace h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.pace h2 svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--over);
+}
+
+.pace p:last-child {
+  margin-bottom: 0;
+}
+
+.pace .btn {
+  margin-top: 4px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rule);
+  font-weight: 400;
+  text-align: left;
+}
+
+.table thead th {
+  border-bottom-color: var(--ink);
+  color: var(--ink-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.table tbody th {
+  font-weight: 700;
+}
+
+.table .num {
+  text-align: right;
+}
+
+.table .icon-btn {
+  margin-left: auto;
+}
+
+.empty {
+  padding: 28px 12px;
+  border: 1px solid var(--rule);
+  color: var(--ink-2);
+  text-align: center;
+}
+
+/* ---------- forms ---------- */
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.field-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 12px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem var(--font-body); /* 16px keeps iOS from zooming in on focus */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="date"] {
+  min-width: 0;
+}
+
+/* iOS centers the date inside the field unless told otherwise. */
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input::placeholder {
+  color: var(--ink-2);
+  opacity: 0.8;
+}
+
+.form-help,
+.form-note,
+.fineprint {
+  margin: 4px 0 0;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.form-note {
+  margin: 0;
+  color: var(--ink);
+}
+
+.form-error {
+  margin: 0;
+  color: var(--over);
+  font-weight: 700;
+}
+
+.fineprint {
+  margin-top: 22px;
+}
+
+.notice {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.notice svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.notice--warn {
+  border-color: var(--over);
+}
+
+.notice--warn svg {
+  color: var(--over);
+}
+
+/* ---------- settings ---------- */
+
+.times {
+  margin: 0 0 4px;
+}
+
+.times div {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.times dt {
+  font-weight: 700;
+}
+
+.times dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.steps {
+  margin: 14px 0 10px;
+  padding-left: 1.3rem;
+}
+
+.steps li {
+  margin-bottom: 6px;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+.address span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+#app > section {
+  margin-bottom: 26px;
+}
+
+/* ---------- first run ---------- */
+
+.setup-head {
+  margin: 10px 0 18px;
+}
+
+.setup-head h1 {
+  font-size: 3.4rem;
+  letter-spacing: -0.03em;
+}
+
+.setup-head p {
+  margin: 8px 0 0;
+}
+
+/* ---------- tab bar ---------- */
+
+.tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.is-setup .tabs {
+  display: none;
+}
+
+.tabs a {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 3px;
+  height: var(--tabs-height);
+  color: var(--ink-2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.tabs svg {
+  width: 24px;
+  height: 24px;
+}
+
+.tabs a.is-active {
+  color: var(--ink);
+}
+
+.tabs a.is-active::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 18%;
+  right: 18%;
+  height: 4px;
+  background: var(--ink);
+}
+
+/* ---------- sheets ---------- */
+
+.sheet {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  max-height: 90dvh;
+  margin: auto auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 18px 18px 0 0;
+  background: var(--sheet);
+  color: var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sheet[open] {
+  animation: sheet-in 0.2s ease-out;
+}
+
+.sheet::backdrop {
+  background: var(--backdrop);
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(28px);
+    opacity: 0;
+  }
+}
+
+.sheet__body {
+  padding: 22px var(--gutter) calc(24px + env(safe-area-inset-bottom));
+}
+
+.sheet__close {
+  position: sticky;
+  top: 6px;
+  z-index: 1;
+  float: right;
+  margin: 6px 6px 0 0;
+  background: var(--sheet);
+  color: var(--ink);
+}
+
+.sheet__context {
+  margin: 0 44px 4px 0;
+  color: var(--ink-2);
+  font-size: 0.9rem;
+}
+
+.sheet__title {
+  margin: 0 44px 12px 0;
+  font-size: 1.6rem;
+}
+
+.sheet__actions {
+  margin-top: 20px;
+}
+
+.sheet__status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.sheet__status svg {
+  width: 24px;
+  height: 24px;
+  padding: 3px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: var(--sheet);
+}
+
+/* A real nutrition label for each meal. */
+.label {
+  margin: 4px 0 6px;
+  padding: 6px 10px 8px;
+  border: 2px solid var(--ink);
+}
+
+.label__title {
+  margin: 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.label__line {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+.label__calories {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.label__calories span:last-child {
+  font-size: 2.3rem;
+}
+
+.label__row {
+  margin: 0;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.label__row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.label__row--sub {
+  padding-left: 16px;
+}
+
+.ingredients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredients li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ingredients__g {
+  flex: none;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.options {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.option {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  min-height: 56px;
+  padding: 9px 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option__name {
+  font-weight: 700;
+}
+
+.option__nums {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.option__note {
+  margin-left: 8px;
+  color: var(--ink-2);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.option.is-current::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--gutter) * -1);
+  top: 8px;
+  bottom: 8px;
+  width: 6px;
+  background: var(--tape);
+}
+
+/* ---------- toast ---------- */
+
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(var(--tabs-height) + 14px + env(safe-area-inset-bottom));
+  z-index: 20;
+  width: fit-content;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.noscript {
+  padding: 24px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
