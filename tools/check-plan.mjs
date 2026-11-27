@@ -4,8 +4,12 @@
 //     node tools/check-plan.mjs            (uses planKcal from js/config.js)
 //     node tools/check-plan.mjs 1600       (check another calorie target)
 
+import { readFileSync } from 'node:fs';
+
+import { nutWordIn } from '../js/allergens.js';
 import { CONFIG } from '../js/config.js';
 import { FOODS } from '../js/foods.js';
+import { formatMoney, groceryList, readCatalog } from '../js/grocery.js';
 import { MEALS, ROTATION } from '../js/meals.js';
 import { addDays, planForDate, rotationIndex } from '../js/core.js';
 
@@ -19,22 +23,16 @@ const flag = (msg) => {
 };
 
 // Allergen guard: no peanuts or tree nuts anywhere in the plan.
-// Matches whole words only, so "nonstick" or "nutrition" do not trip it.
-// A few entries are foods that usually contain nuts (pesto, granola, trail mix).
-const NUT_WORDS = [
-  'nut', 'nuts', 'peanut', 'peanuts', 'almond', 'almonds', 'walnut', 'walnuts', 'pecan', 'pecans',
-  'cashew', 'cashews', 'pistachio', 'pistachios', 'hazelnut', 'hazelnuts', 'macadamia', 'brazil',
-  'pine', 'praline', 'marzipan', 'nougat', 'pesto', 'satay', 'nutella', 'granola', 'trail',
-];
-const NUT_RE = new RegExp(`\\b(${NUT_WORDS.join('|')})\\b`, 'i');
+// The word list lives in js/allergens.js. It matches whole words only, so
+// "nonstick" or "nutrition" do not trip it.
 const nutHits = [];
 for (const id of Object.keys(FOODS)) {
-  if (NUT_RE.test(id.replace(/_/g, ' '))) nutHits.push(`food "${id}"`);
+  if (nutWordIn(id)) nutHits.push(`food "${id}"`);
 }
 for (const meal of MEALS) {
   const text = [meal.name, meal.method, ...meal.items.map(([food, , how]) => `${food.replace(/_/g, ' ')} ${how}`)].join(' | ');
-  const hit = NUT_RE.exec(text);
-  if (hit) nutHits.push(`meal ${meal.id} ("${hit[0]}")`);
+  const hit = nutWordIn(text);
+  if (hit) nutHits.push(`meal ${meal.id} ("${hit}")`);
 }
 if (nutHits.length) {
   console.log('NUT CHECK FAILED');
@@ -88,5 +86,34 @@ for (let i = 0; i < ROTATION.length; i += 1) {
   );
 }
 console.log(`\nAverage: ${Math.round(kcalSum / ROTATION.length)} kcal, ${Math.round(proteinSum / ROTATION.length)} g protein a day`);
+
+// The grocery price list: it must read cleanly, buy every ingredient the
+// meals use, and name no nut.
+console.log('\nGROCERIES');
+const priceList = new URL(`../${CONFIG.grocery.priceList.replace(/^\.\//, '')}`, import.meta.url);
+const { catalog, problems: listProblems } = readCatalog(JSON.parse(readFileSync(priceList, 'utf8')));
+for (const problem of listProblems) console.log(`${problem}${flag('price list')}`);
+if (!catalog) {
+  console.log(`The price list could not be read.${flag('price list')}`);
+} else {
+  for (const food of new Set(MEALS.flatMap((meal) => meal.items.map(([name]) => name)))) {
+    if (!catalog.itemForFood.has(food)) console.log(`${food}${flag('used by a meal but not bought as anything in the price list')}`);
+  }
+  const listTexts = [
+    ...catalog.stores.flatMap((store) => [store.name, store.brand]),
+    ...catalog.items.flatMap((item) => [item.id.replace(/-/g, ' '), item.name, item.as, ...item.typical.map((offer) => offer.label)]),
+  ];
+  for (const text of listTexts) {
+    if (nutWordIn(text)) console.log(`"${text}"${flag('names a nut')}`);
+  }
+  // What two weeks of this plan cost at the typical prices, bought a week at a time.
+  const input = { catalog, storeId: catalog.stores[0].id, start, days: 7, kcalFor: () => target, swaps: {}, logged: {}, servings: 1, prefs: {}, offers: [] };
+  const first = groceryList({ ...input, lots: [] });
+  const lots = first.lines.map((line, i) => ({ id: String(i), item: line.id, date: start, grams: line.covers, until: line.item.keeps ? null : first.end }));
+  const second = groceryList({ ...input, start: addDays(start, 7), lots });
+  console.log(`${catalog.items.length} items, ${catalog.stores.length} stores, price list of ${catalog.updated}.`);
+  console.log(`Week A from an empty kitchen: ${first.lines.length} items, about ${formatMoney(first.totalCents)} (${formatMoney(first.usedCents)} of it eaten that week).`);
+  console.log(`Week B after it:             ${second.lines.length} items, about ${formatMoney(second.totalCents)} (${formatMoney(second.usedCents)} of it eaten that week).`);
+}
 console.log(problems ? `\n${problems} thing(s) to fix.` : '\nEverything is inside the limits.');
 process.exitCode = problems ? 1 : 0;

@@ -2,9 +2,11 @@
 //
 // Strategy: try the network first so an update you push to GitHub shows up on
 // the next launch, and fall back to the saved copy when offline or slow.
+// Requests skip the browser's own short-term cache (GitHub Pages lets browsers
+// keep files for 10 minutes), so a new version is never mixed with an old one.
 // Bump VERSION if you ever need to force every saved file to be thrown away.
 
-const VERSION = 'fuel-v1';
+const VERSION = 'fuel-v3';
 const TIMEOUT_MS = 3000;
 
 const FILES = [
@@ -12,13 +14,17 @@ const FILES = [
   './index.html',
   './manifest.webmanifest',
   './css/app.css',
+  './js/allergens.js',
   './js/app.js',
   './js/chart.js',
   './js/config.js',
   './js/core.js',
   './js/foods.js',
+  './js/grocery.js',
   './js/meals.js',
+  './js/publish.js',
   './js/store.js',
+  './data/groceries.json',
   './fonts/ArchivoBlack-Regular.ttf',
   './icons/favicon.svg',
   './icons/icon-192.png',
@@ -28,7 +34,9 @@ const FILES = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(VERSION).then((cache) => cache.addAll(FILES)).then(() => self.skipWaiting()),
+    caches.open(VERSION)
+      .then((cache) => cache.addAll(FILES.map((file) => new Request(file, { cache: 'reload' }))))
+      .then(() => self.skipWaiting()),
   );
 });
 
@@ -43,7 +51,8 @@ self.addEventListener('activate', (event) => {
 function fetchWithTimeout(request) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('timeout')), TIMEOUT_MS);
-    fetch(request).then(
+    // 'no-cache' asks GitHub whether the file changed; an unchanged file costs a tiny reply.
+    fetch(request, { cache: 'no-cache' }).then(
       (response) => {
         clearTimeout(timer);
         resolve(response);
