@@ -27,4 +27,11 @@ export const CONFIG = {
     // Last day the reminders repeat.
     until: '2027-03-31',
   },
+
+  grocery: {
+    // The price list the grocery screen pulls each time the app opens: stores,
+    // what each ingredient is bought as, and typical prices. Edit that file to
+    // change them, or point this at a price list kept somewhere else.
+    priceList: './data/groceries.json',
+  },
 };

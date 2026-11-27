@@ -918,6 +918,47 @@ input::placeholder {
   opacity: 0.8;
 }
 
+select,
+.field-btn {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 12px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background-color: var(--paper);
+  color: var(--ink);
+  font: 400 1rem var(--font-body);
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* A small solid arrow, drawn so it follows the ink color in both themes. */
+select {
+  padding-right: 34px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 19px) 50%, calc(100% - 13px) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+}
+
+.field-btn {
+  font-weight: 700;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .form-help,
 .form-note,
 .fineprint {
@@ -1282,6 +1323,216 @@ input::placeholder {
   bottom: 8px;
   width: 6px;
   background: var(--tape);
+}
+
+/* ---------- grocery list ---------- */
+
+.row-link {
+  margin-bottom: 14px;
+  border-top: 1px solid var(--rule);
+}
+
+.grocery-controls {
+  margin: 14px 0 16px;
+}
+
+.moves {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.moves li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: baseline;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.moves__where {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.moves__saving {
+  white-space: nowrap;
+}
+
+.moves__what {
+  grid-column: 1 / -1;
+}
+
+.btn-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-pair .btn {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+@media (max-width: 359px) {
+  .btn-pair .btn {
+    font-size: 0.9rem;
+  }
+}
+
+/* A line of small print directly above a ruled section needs room. */
+.hint + .aisle,
+.hint + .rules {
+  margin-top: 18px;
+}
+
+.sheet .extras {
+  margin: 0 0 16px;
+}
+
+.pace__tip {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+}
+
+.buys {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.buy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  column-gap: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+.buy__open {
+  display: grid;
+  gap: 2px;
+  min-height: 60px;
+  padding: 9px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.buy__name {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.buy__qty,
+.buy__note {
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+
+.buy__note strong {
+  color: var(--ink);
+}
+
+.buy__price {
+  min-width: 3.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* A typical price is set lighter than one you recorded, and carries a ~. */
+.buy__price.is-estimate {
+  color: var(--ink-2);
+  font-weight: 400;
+}
+
+.buy.is-done .buy__name {
+  color: var(--ink-2);
+  font-weight: 400;
+  text-decoration: line-through;
+}
+
+.buy.is-done .buy__price {
+  color: var(--ink-2);
+}
+
+.buy--home {
+  grid-template-columns: minmax(0, 1fr) 22px;
+}
+
+.buy--home .buy__name {
+  font-weight: 400;
+}
+
+.buy--home > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--ink-2);
+}
+
+.label--buy .label__title {
+  font-size: 1.55rem;
+  line-height: 1.1;
+}
+
+/* Rows in a sheet that switch something on or off. */
+.switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option--tick {
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.option--tick .option__name,
+.option--tick .option__nums {
+  grid-column: 1;
+}
+
+.option--tick svg {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.switch svg,
+.option--tick svg {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 3px;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  color: transparent;
+}
+
+.switch[aria-checked="true"] svg,
+.option--tick[aria-checked="true"] svg {
+  background: var(--ink);
+  color: var(--sheet);
 }
 
 /* ---------- toast ---------- */

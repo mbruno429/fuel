@@ -5,7 +5,7 @@ A meal plan, meal reminders and a meal log in one small web app. It is a static 
 What is in it:
 
 - **Today** shows your calories and protein left, the day's meals at their times, and a box to tick when you eat each one. Anything off-plan goes in with "Log something else".
-- **Plan** lists the next two weeks. Tap a meal for its recipe and nutrition, or to swap it for another.
+- **Plan** lists the next two weeks. Tap a meal for its recipe and nutrition, or to swap it for another. **Grocery list**, at the top of Plan, turns those meals into a shopping list with a budget.
 - **Log** keeps every day since you started.
 - **Progress** tracks your weight against the plan and, after two weeks of weigh-ins, tells you whether to change your calorie target.
 - **Settings** holds your numbers, the meal reminders and backups.
@@ -65,6 +65,44 @@ If your calorie target in the app changes, set `planKcal` in `js/config.js` to m
 
 Calendar can also subscribe to the file, which gives the reminders their own calendar and picks up changes whenever you push a new `meal-reminders.ics`: open `webcal://YOUR-NAME.github.io/YOUR-REPO/meal-reminders.ics` in Safari. iPhones can strip alerts from subscribed calendars, so check the subscription's settings (Settings, Calendar, Accounts, Subscribed Calendars) and make sure **Remove Alarms** is off.
 
+## Grocery list
+
+Open **Plan > Grocery list**. The app adds up the ingredients of your planned meals for the next 3, 7 or 14 days, turns them into things you buy, prices them, and compares the total with a budget if you set one.
+
+- **Shopping at.** Pick the store. Ten chains are listed (Walmart, Target, Trader Joe's, Whole Foods, Raley's, Bel Air, Safeway, Costco, Sprouts, WinCo) and you can add your own. The store decides which of your recorded prices apply, and which store brand the app points you to.
+- **Budget for this trip.** What you want to spend. When the list comes to more, the app lists the changes that bring it under and makes them when you tap. Nothing changes until you do.
+- **Brand.** Tap an item to choose a brand for it. "Lowest price" is the default. Switch on "Keep this brand" and the budget suggestions never touch it. Use that for a brand you buy because you have checked it is safe for you.
+- **A price you paid.** Tap an item and enter the brand, package size and price. It is saved for the store you are shopping at and replaces the typical price there.
+- **Ticking off.** Tick items as they go in the cart. **Mark what I have** is for food already in your kitchen.
+- **Each dinner feeds.** Multiplies dinner ingredients when you cook for more people. Breakfasts, lunches and snacks stay single portions.
+
+### Where the prices come from
+
+None of those stores offers a free price feed that a site like this can read, so the app cannot look their prices up. It starts from `data/groceries.json`, a list of typical prices: [U.S. Bureau of Labor Statistics average prices](https://www.bls.gov/regions/mid-atlantic/data/AverageRetailFoodAndEnergyPrices_USandWest_Table.htm) for October 2026 where one exists (West region, otherwise the U.S. city average), and estimates for everything else. Typical prices are the same for every store, so the app never says one store is cheaper than another on the strength of them. A typical price is marked with a `~` wherever it appears.
+
+Each price you record replaces a typical one at that store, so the totals get exact as you use the list. Recorded prices, brand choices and purchases stay on your device and are part of the backup.
+
+### The rules
+
+The list is worked out by fixed rules in `js/grocery.js`. Nothing is random, nothing depends on the order things were entered, and no outside service is involved, so the same plan, prices, store, brands, purchases and budget always give the same list.
+
+1. **Needs.** Every ingredient of every planned meal in the period, swaps included, minus meals already logged. Recipe grams become grams you buy: raw weight for cooked chicken, dry weight for cooked rice, whole cans for drained beans, bananas with the peel.
+2. **Stock.** What you ticked or marked on earlier days comes off, less what the planned meals have used since. Food that keeps (pantry and frozen food, eggs, string cheese, parmesan) stays in stock until it is used up. Fresh food counts only for the days it was bought for. Marking something "at home" assumes one full package. An item ticked today stays on the list as "in the cart" and becomes stock tomorrow.
+3. **Product.** With no brand chosen, the offer that covers the amount for the least money, in whole packages, or in quarter pounds for food sold by weight. A package may fall 5% short of the amount. Ties go to the lower unit price, then to a price you recorded, then alphabetically. With a brand chosen: that brand at this store's price, else its price at another store, else the typical price.
+4. **Budget.** Over budget, cheaper brands are suggested first, largest saving first, skipping savings under 25 cents, brands marked "keep" and anything already ticked. If that is not enough, up to four meal changes follow: each is the single change that saves the most, worth at least a dollar, that keeps the day within 10 g of its protein and 100 kcal of its calories, never the same meal two days running or more than twice in the list. Meals already logged are left alone, and once you have started ticking items no meal change is suggested.
+
+### Changing the price list
+
+`data/groceries.json` holds the stores, what each ingredient is bought as, and the typical prices. The app pulls it every time it opens, so an edit you push to GitHub shows up on the next launch. The note at the top of the file explains each field. To change a typical price, edit `price`; to add a store, add a line to `stores`. To keep the list somewhere else, point `grocery.priceList` in `js/config.js` at it.
+
+If you add an ingredient to `js/foods.js`, add it to an item's `foods` in the price list too. `node tools/check-plan.mjs` fails when a meal uses something the price list does not buy.
+
+### What it does not do
+
+- It does not know any store's real prices or stock until you record them.
+- It does not read packaging. "Check the label" marks kinds of packaged food that more often carry nut warnings, and a name you type that mentions a nut is flagged, but neither is a safety check.
+- It does not know what you ate off-plan or what someone else took from the fridge. If the app thinks you have something you do not, tap it and choose **I have none left**.
+
 ## Changing the plan
 
 - `js/meals.js` holds every meal: ingredients in grams, how to measure them, and the method. It also holds the two-week rotation of breakfasts, lunches and dinners.
@@ -74,12 +112,12 @@ Calendar can also subscribe to the file, which gives the reminders their own cal
 After editing, run the checks:
 
 ```
-node tools/check-plan.mjs        # every meal and every day against the plan's limits
+node tools/check-plan.mjs        # every meal, every day and the grocery price list against the plan's limits
 node tools/check-plan.mjs 1600   # the same at another calorie target
 node --test                      # the logic tests
 ```
 
-**Allergens.** The plan contains no peanuts or tree nuts, and both the check script and the tests fail if a nut appears in a food, an ingredient line, a meal name or a method. The hummus and the sesame oil contain sesame, and a few recipes use chia seeds. Packaged foods can carry nut warnings whatever the recipe says, so read the labels on protein powder, oats, bread, tortillas, hummus, seasoning mixes and sauces.
+**Allergens.** The plan contains no peanuts or tree nuts, and both the check script and the tests fail if a nut appears in a food, an ingredient line, a meal name, a method or the grocery price list. The list of words that count as a nut is in `js/allergens.js`. The hummus and the sesame oil contain sesame, and a few recipes use chia seeds. Packaged foods can carry nut warnings whatever the recipe says, so read the labels on protein powder, oats, bread, tortillas, hummus, seasoning mixes and sauces.
 
 ## How the numbers are worked out
 
@@ -93,7 +131,7 @@ All of this is estimation. Watch calorie counts and food labels are both rough, 
 
 ## Your data
 
-Your settings, log and weigh-ins are saved in the browser's storage on your device and nowhere else. **Settings > Backup** saves everything to a file and restores it. Make a backup now and then, and before deleting the app from your Home Screen, because that deletes its data.
+Your settings, log, weigh-ins and grocery choices are saved in the browser's storage on your device and nowhere else. **Settings > Backup** saves everything to a file and restores it. Make a backup now and then, and before deleting the app from your Home Screen, because that deletes its data.
 
 ## Files
 
@@ -102,11 +140,14 @@ index.html              the page
 css/app.css             styles
 js/app.js               screens and taps
 js/core.js              dates, targets, the daily plan, pace check, calendar file
+js/grocery.js           the grocery list: needs, stock, products, budget
+js/allergens.js         the words the nut checks look for
 js/store.js             saving and loading on the device
 js/chart.js             the weight chart
 js/meals.js             meals and the two-week rotation
 js/foods.js             nutrition per 100 g
-js/config.js            meal times and reminder settings
+js/config.js            meal times, reminder settings, where the price list is
+data/groceries.json     stores, what each ingredient is bought as, typical prices
 sw.js                   offline support
 manifest.webmanifest    Home Screen name and icons
 meal-reminders.ics      the calendar reminders
