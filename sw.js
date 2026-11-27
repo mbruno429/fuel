@@ -6,7 +6,7 @@
 // keep files for 10 minutes), so a new version is never mixed with an old one.
 // Bump VERSION if you ever need to force every saved file to be thrown away.
 
-const VERSION = 'fuel-v2';
+const VERSION = 'fuel-v3';
 const TIMEOUT_MS = 3000;
 
 const FILES = [
@@ -22,6 +22,7 @@ const FILES = [
   './js/foods.js',
   './js/grocery.js',
   './js/meals.js',
+  './js/publish.js',
   './js/store.js',
   './data/groceries.json',
   './fonts/ArchivoBlack-Regular.ttf',

@@ -4,11 +4,16 @@
 // Calories and macros are worked out from js/foods.js when the app loads,
 // so changing an amount here updates every number in the app.
 //
+// These are the built-in meals. Changes made in the app (different amounts,
+// meals of your own, a different menu) are saved on the device and laid over
+// them by applyMealChanges(); the built-in versions stay as they are, so any
+// meal can be put back.
+//
 // The plan contains no peanuts or tree nuts. Keep it that way: after any
 // edit run  node tools/check-plan.mjs  which fails if one appears in a food
 // id, an ingredient line, a meal name or a method.
 
-import { FOODS } from './foods.js';
+import { FOODS, FOOD_NAMES } from './foods.js';
 
 const RAW_MEALS = [
   // ---------- Breakfasts (about 400 kcal) ----------
@@ -579,7 +584,7 @@ const RAW_MEALS = [
 
 // Two-week rotation. Day 0 is the Monday of week A, day 7 the Monday of week B.
 // Snacks are not listed: the app picks one that fits what the meals leave over.
-export const ROTATION = [
+const BASE_ROTATION_LIST = [
   // Week A
   { breakfast: 'b-oats', lunch: 'l-wrap', dinner: 'd-sheetpan' },
   { breakfast: 'b-scramble', lunch: 'l-greek', dinner: 'd-tacos' },
@@ -598,13 +603,16 @@ export const ROTATION = [
   { breakfast: 'b-avotoast', lunch: 'l-wrap', dinner: 'd-fajitas' },
 ];
 
+// ---------------------------------------------------------------- nutrition
+
 const round5 = (n) => Math.round(n / 5) * 5;
 
-function nutritionFor(items) {
+/** Calories and macros of a list of ingredients, from js/foods.js. */
+export function nutritionFor(items) {
   const sum = [0, 0, 0, 0, 0];
   for (const [food, grams] of items) {
     const per100 = FOODS[food];
-    if (!per100) throw new Error(`Unknown food "${food}" in js/meals.js`);
+    if (!per100) continue;
     for (let i = 0; i < 5; i += 1) sum[i] += (per100[i] * grams) / 100;
   }
   return {
@@ -616,14 +624,185 @@ function nutritionFor(items) {
   };
 }
 
-export const MEALS = RAW_MEALS.map((meal) => Object.freeze({ ...meal, ...nutritionFor(meal.items) }));
+/** '4.5' for 4.5, '245' for 245. */
+export function gramsText(grams) {
+  return String(Math.round(grams * 10) / 10);
+}
 
-const BY_ID = new Map(MEALS.map((meal) => [meal.id, meal]));
+/** How an ingredient reads: its own measure, or else its grams and the food's name. */
+export function ingredientText([food, grams, how]) {
+  return how || `${gramsText(grams)} g ${FOOD_NAMES[food] || food}`;
+}
+
+// ---------------------------------------------------------------- the built-in meals
+
+export const SLOTS = ['breakfast', 'lunch', 'dinner', 'snack'];
+export const MAIN_SLOTS = ['breakfast', 'lunch', 'dinner'];
+export const MAX_ITEMS = 30;
+export const MAX_GRAMS = 2000;
+export const NAME_MAX = 80;
+export const METHOD_MAX = 1000;
+
+function freezeMeal(meal) {
+  return Object.freeze({ ...meal, items: Object.freeze(meal.items.map((item) => Object.freeze([...item]))) });
+}
+
+export const BASE_MEALS = Object.freeze(RAW_MEALS.map((meal) => {
+  for (const [food] of meal.items) {
+    if (!FOODS[food]) throw new Error(`Unknown food "${food}" in js/meals.js`);
+  }
+  return freezeMeal({ ...meal, origin: 'built-in', numbersOnly: false, ...nutritionFor(meal.items) });
+}));
+
+const BASE_BY_ID = new Map(BASE_MEALS.map((meal) => [meal.id, meal]));
+
+export const BASE_ROTATION = Object.freeze(BASE_ROTATION_LIST.map((day) => Object.freeze({ ...day })));
+
+/** The built-in version of a meal, whatever has been changed since. */
+export function baseMeal(id) {
+  return BASE_BY_ID.get(id) || null;
+}
+
+// ---------------------------------------------------------------- the meals in use
+
+// MEALS and ROTATION are the meals and the two-week menu the app uses: the
+// built-in ones with any changes laid over them, then meals of your own.
+// They are changed in place, so every module that imported them sees changes.
+export const MEALS = [];
+export const ROTATION = [];
+let byId = new Map();
+let version = 0;
+
+const text = (value, max) => (typeof value === 'string' ? value.trim().replace(/[ \t]+/g, ' ').slice(0, max) : '');
+
+/** An ingredient list with unknown foods and impossible amounts left out. */
+export function cleanItems(items) {
+  const out = [];
+  for (const item of Array.isArray(items) ? items : []) {
+    if (!Array.isArray(item) || out.length >= MAX_ITEMS) continue;
+    const [food, grams, how] = item;
+    const g = Number(grams);
+    if (!Object.hasOwn(FOODS, food) || !(g > 0) || g > MAX_GRAMS) continue;
+    out.push([food, Math.round(g * 10) / 10, text(how, 120)]);
+  }
+  return out;
+}
+
+const FACT_LIMITS = { kcal: [1, 4000], protein: [0, 400], carbs: [0, 600], fat: [0, 300], fiber: [0, 150] };
+
+/** Numbers typed in for a meal with no ingredients, or null if they make no sense. */
+export function cleanFacts(facts) {
+  if (!facts || typeof facts !== 'object') return null;
+  const out = {};
+  for (const [key, [low, high]] of Object.entries(FACT_LIMITS)) {
+    const value = facts[key] === undefined || facts[key] === '' ? (key === 'kcal' ? NaN : 0) : Number(facts[key]);
+    if (!Number.isFinite(value) || value < low || value > high) return null;
+    out[key] = Math.round(value);
+  }
+  return out;
+}
+
+/**
+ * Lay the changes made in the app over the built-in meals and menu.
+ *   edits: { [built-in id]: { name, items, method } }   a changed built-in meal
+ *   added: [{ id, slot, name, items, facts, method }]   meals of your own; facts when there are no items
+ *   auto:  { [snack id]: true | false }                 whether the plan may pick a snack by itself
+ *   menu:  { [0-13]: { breakfast, lunch, dinner } }     the two-week menu, cell by cell
+ * Anything that does not hold together is left out and reported in `problems`.
+ */
+export function applyMealChanges({ edits = {}, added = [], auto = {}, menu = {} } = {}) {
+  const problems = [];
+  const next = [];
+  for (const base of BASE_MEALS) {
+    let meal = base;
+    const edit = edits && typeof edits === 'object' ? edits[base.id] : null;
+    if (edit && typeof edit === 'object') {
+      const items = edit.items === undefined ? base.items : cleanItems(edit.items);
+      if (!items.length) problems.push(`Changes to "${base.id}" have no ingredients, so the built-in ingredients stay.`);
+      const useItems = items.length ? items : base.items;
+      meal = {
+        ...base,
+        name: text(edit.name, NAME_MAX) || base.name,
+        method: typeof edit.method === 'string' ? text(edit.method, METHOD_MAX) : base.method,
+        items: useItems,
+        ...nutritionFor(useItems),
+        origin: 'changed',
+      };
+    }
+    if (base.slot === 'snack' && auto && typeof auto[base.id] === 'boolean' && auto[base.id] === Boolean(base.manualOnly)) {
+      meal = { ...meal, manualOnly: !auto[base.id] };
+    }
+    next.push(meal === base ? base : freezeMeal(meal));
+  }
+
+  const ids = new Set(next.map((meal) => meal.id));
+  for (const raw of Array.isArray(added) ? added : []) {
+    const id = raw && typeof raw.id === 'string' ? raw.id : '';
+    if (!/^my-[a-z0-9-]{1,60}$/.test(id) || ids.has(id)) {
+      problems.push(`A meal of yours has a missing or repeated id ("${id}").`);
+      continue;
+    }
+    const name = text(raw.name, NAME_MAX);
+    if (!SLOTS.includes(raw.slot) || !name) {
+      problems.push(`Meal "${id}" needs a name and a meal of the day.`);
+      continue;
+    }
+    const items = cleanItems(raw.items);
+    const facts = items.length ? null : cleanFacts(raw.facts);
+    if (!items.length && !facts) {
+      problems.push(`Meal "${id}" has neither ingredients nor numbers.`);
+      continue;
+    }
+    ids.add(id);
+    next.push(freezeMeal({
+      id,
+      slot: raw.slot,
+      name,
+      mins: Number(raw.mins) > 0 ? Math.round(Number(raw.mins)) : null,
+      items,
+      method: text(raw.method, METHOD_MAX),
+      ...(items.length ? nutritionFor(items) : facts),
+      origin: 'yours',
+      numbersOnly: !items.length,
+      ...(raw.slot === 'snack' ? { manualOnly: Boolean(auto && auto[id] === false) } : {}),
+    }));
+  }
+
+  const nextById = new Map(next.map((meal) => [meal.id, meal]));
+  const rotation = BASE_ROTATION.map((day, index) => {
+    const change = menu && typeof menu === 'object' ? menu[index] : null;
+    const out = { ...day };
+    if (change && typeof change === 'object') {
+      for (const slot of MAIN_SLOTS) {
+        if (change[slot] === undefined) continue;
+        const meal = nextById.get(change[slot]);
+        if (meal && meal.slot === slot) out[slot] = meal.id;
+        else problems.push(`The menu puts "${change[slot]}" at ${slot} on day ${index + 1}, which is not a ${slot}.`);
+      }
+    }
+    return Object.freeze(out);
+  });
+
+  MEALS.length = 0;
+  MEALS.push(...next);
+  ROTATION.length = 0;
+  ROTATION.push(...rotation);
+  byId = nextById;
+  version += 1;
+  return { problems };
+}
+
+/** Goes up by one every time the meals change, so other modules know when to look again. */
+export function mealsVersion() {
+  return version;
+}
 
 export function mealById(id) {
-  return BY_ID.get(id) || null;
+  return byId.get(id) || null;
 }
 
 export function mealsForSlot(slot) {
   return MEALS.filter((meal) => meal.slot === slot);
 }
+
+applyMealChanges(); // the built-in meals and menu until the app says otherwise

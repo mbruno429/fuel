@@ -3,7 +3,7 @@
 // browser, in Node (tools/) and in tests.
 
 import { CONFIG } from './config.js';
-import { MEALS, ROTATION, mealById } from './meals.js';
+import { MEALS, ROTATION, ingredientText, mealById, mealsVersion } from './meals.js';
 
 // ---------------------------------------------------------------- dates
 // Dates are 'YYYY-MM-DD' strings in the user's local calendar. Arithmetic is
@@ -189,8 +189,33 @@ export const SLOT_LABELS = {
 const MAIN_SLOTS = ['breakfast', 'lunch', 'dinner'];
 const SNACK_SLOTS = ['snack', 'morningSnack'];
 
+// ---------------------------------------------------------------- meal times
+// The times in js/config.js until changed in the app. setMealTimes() takes
+// the saved ones; anything missing or malformed keeps the configured time.
+
+const TIME_RE = /^([01]\d|2[0-3]):[0-5]\d$/;
+let currentTimes = { ...CONFIG.mealTimes };
+
+export function isValidTime(value) {
+  return typeof value === 'string' && TIME_RE.test(value);
+}
+
+/** Use these meal times from now on. Returns the times now in use. */
+export function setMealTimes(times = {}) {
+  const next = {};
+  for (const slot of Object.keys(SLOT_LABELS)) {
+    next[slot] = times && isValidTime(times[slot]) ? times[slot] : CONFIG.mealTimes[slot];
+  }
+  currentTimes = next;
+  return { ...currentTimes };
+}
+
+export function getMealTimes() {
+  return { ...currentTimes };
+}
+
 /** Slots in the order they happen during the day. */
-export function orderedSlots(mealTimes = CONFIG.mealTimes) {
+export function orderedSlots(mealTimes = currentTimes) {
   return Object.keys(SLOT_LABELS).sort((a, b) => minutesOfDay(mealTimes[a]) - minutesOfDay(mealTimes[b]));
 }
 
@@ -203,7 +228,14 @@ export function librarySlot(slot) {
   return isSnackSlot(slot) ? 'snack' : slot;
 }
 
-const AUTO_SNACKS = MEALS.filter((meal) => meal.slot === 'snack' && !meal.manualOnly);
+// The snacks the plan may pick by itself, worked out again whenever the meals change.
+let autoSnacks = { version: -1, list: [] };
+function snacksToPick() {
+  if (autoSnacks.version !== mealsVersion()) {
+    autoSnacks = { version: mealsVersion(), list: MEALS.filter((meal) => meal.slot === 'snack' && !meal.manualOnly) };
+  }
+  return autoSnacks.list;
+}
 const SNACK_OVER = 25; // a snack may run this far past its budget
 export const TWO_SNACK_BUDGET = 460; // above this the leftover is split over two snacks
 
@@ -213,7 +245,7 @@ export const TWO_SNACK_BUDGET = 460; // above this the leftover is split over tw
  * same snack does not come up every day.
  */
 export function pickSnack(budget, rotation, excludeId = null) {
-  const pool = AUTO_SNACKS.filter((s) => s.id !== excludeId);
+  const pool = snacksToPick().filter((s) => s.id !== excludeId);
   const fits = (low) => pool.filter((s) => s.kcal <= budget + SNACK_OVER && s.kcal >= budget - low);
   let options = fits(50);
   if (options.length < 3) options = fits(90);
@@ -232,7 +264,7 @@ export function pickSnack(budget, rotation, excludeId = null) {
  * swaps: { [slot]: mealId } and, for the two snack slots, 'none' to skip it.
  * The three meals follow the rotation; snacks fill what the meals leave over.
  */
-export function planForDate(dateStr, kcalTarget, swaps = {}, mealTimes = CONFIG.mealTimes) {
+export function planForDate(dateStr, kcalTarget, swaps = {}, mealTimes = currentTimes) {
   const rotation = rotationIndex(dateStr);
   const base = ROTATION[rotation];
   const chosen = {};
@@ -427,11 +459,13 @@ function icsUtcStamp(date) {
  * each with an alert at the meal time.
  * Times are "floating" (no time zone), so 12:00 means noon wherever you are.
  */
+// The file is public on the site, so it names meals and times but never the
+// calorie target or anything else about the person it was made for.
 export function buildRemindersICS({
   fromDate,
   untilDate = CONFIG.reminders.until,
   kcalTarget = CONFIG.reminders.planKcal,
-  mealTimes = CONFIG.mealTimes,
+  mealTimes = currentTimes,
   stamp = new Date(),
 } = {}) {
   const lines = [
@@ -441,7 +475,7 @@ export function buildRemindersICS({
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'X-WR-CALNAME:Meal plan',
-    `X-WR-CALDESC:${icsEscape(`Meal reminders from ${CONFIG.appName}, built for about ${formatNumber(kcalTarget)} kcal a day.`)}`,
+    `X-WR-CALDESC:${icsEscape(`Meal reminders from ${CONFIG.appName}.`)}`,
   ];
   const dtstamp = icsUtcStamp(stamp);
   const startRotation = rotationIndex(fromDate);
@@ -458,7 +492,7 @@ export function buildRemindersICS({
       const description = [
         `About ${formatNumber(meal.kcal)} kcal and ${meal.protein} g protein.`,
         '',
-        ...meal.items.map(([, , how]) => `- ${how}`),
+        ...meal.items.map((item) => `- ${ingredientText(item)}`),
         '',
         meal.method,
         '',
@@ -486,4 +520,33 @@ export function buildRemindersICS({
   }
   lines.push('END:VCALENDAR');
   return { text: lines.map(icsFold).join(CRLF) + CRLF, events };
+}
+
+/** A short fingerprint of a text (FNV-1a, 32 bits), as 8 hex digits. */
+export function fingerprint(textValue) {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < textValue.length; i += 1) {
+    hash ^= textValue.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193) >>> 0;
+  }
+  return hash.toString(16).padStart(8, '0');
+}
+
+// Any Monday of a week A: the reminders for rotation day i fall on SIGNATURE_DAY + i.
+const SIGNATURE_DAY = '2026-01-05';
+
+/**
+ * What the reminders would say, as a fingerprint that does not depend on the
+ * day they are made. Two plans with the same fingerprint give the same
+ * reminders, so the app can tell when the file on the site is out of date.
+ */
+export function remindersSignature({ kcalTarget, mealTimes = currentTimes, untilDate }) {
+  const { text: body } = buildRemindersICS({
+    fromDate: SIGNATURE_DAY,
+    untilDate: '2099-12-31',
+    kcalTarget,
+    mealTimes,
+    stamp: new Date(0),
+  });
+  return `${fingerprint(body)}-${untilDate}`;
 }

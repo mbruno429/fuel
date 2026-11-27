@@ -8,7 +8,7 @@ What is in it:
 - **Plan** lists the next two weeks. Tap a meal for its recipe and nutrition, or to swap it for another. **Grocery list**, at the top of Plan, turns those meals into a shopping list with a budget.
 - **Log** keeps every day since you started.
 - **Progress** tracks your weight against the plan and, after two weeks of weigh-ins, tells you whether to change your calorie target.
-- **Settings** holds your numbers, the meal reminders and backups.
+- **Settings** is where you change everything: calories and protein, meal times, the meals themselves, the two-week menu, the meal reminders, grocery prices and stores, and backups. None of it needs a code edit.
 
 ## Put it on GitHub Pages
 
@@ -39,40 +39,42 @@ On first launch it asks for your weight, goal weight, goal date and BMR, plus yo
 
 ## Meal reminders
 
-A site on GitHub Pages has no server to push notifications from, and an iPhone will not let a web app schedule its own. So the reminders come from your Calendar: `meal-reminders.ics` holds one repeating event per meal with an alert at the meal time. Each alert names the meal and shows on your iPhone and Apple Watch; the event's notes hold the ingredients and method.
+A site on GitHub Pages has no server to push notifications from, and an iPhone will not let a web app schedule its own. So the reminders come from your Calendar: `meal-reminders.ics` on your site holds one repeating event per meal with an alert at the meal time. Each alert names the meal and shows on your iPhone and Apple Watch; the event's notes hold the ingredients and method.
 
-To add them:
+The file has to live on the site, so when you change meal times, calories, meals or the menu, Fuel rewrites it in your repository for you. Set that up once:
 
-1. In the Calendar app, create a calendar named Meals. Keeping the reminders in their own calendar means you can remove them all at once by deleting that calendar.
-2. In Fuel, open **Settings > Meal reminders** and tap **Add reminders to Calendar**. Tap **Add All** and choose the Meals calendar.
-3. If the button does nothing inside the Home Screen app, open the address shown under it in Safari. Opening the file on a Mac signed in to the same iCloud account works too.
+1. In Fuel, open **Settings > Meal reminders** and tap **Connect to GitHub**.
+2. Follow the link to GitHub's form for a new key. It arrives filled in with a name, 90 days and access to files. Under **Repository access**, choose **Only select repositories** and pick this repository. Tap **Generate token**, copy the key and paste it into Fuel.
+3. Tap **Update the calendar file**. GitHub publishes it in about a minute.
+4. Tap **Subscribe in Calendar** and confirm. Then, in the Settings app, go to **Apps > Calendar > Accounts > Subscribed Calendars**, open the new calendar and turn off **Remove Alarms**; otherwise the events arrive without alerts.
 
-The reminders follow the same two-week rotation the app shows. They do not know about meals you swap on a given day, so treat the app as the final word.
+From then on, **Settings > Meal reminders** says when the file no longer matches your plan, and what changed. One tap updates it, and the subscribed calendar picks the change up the next time it refreshes, which can take a few hours.
 
-### Changing meal times, or rebuilding the reminders
+About the key:
 
-Meal times live in `js/config.js`, which the app and the reminders both read. After changing them, or after changing meals, rebuild the calendar file (needs Node 18 or newer, no packages):
+- It is a fine-grained personal access token. It can only read and write the files of the one repository you give it, and it expires (after 90 days, unless you choose otherwise). Fuel refuses classic tokens, which reach every repository you own.
+- It is saved only in Fuel on that device, under its own storage name. It is never in the repository, never in a backup file, and only ever sent to `api.github.com`.
+- Every update is an ordinary commit called "Update meal reminders from Fuel", so the repository history shows each change and GitHub can undo it.
+- Every site you host at `YOUR-NAME.github.io` shares one address, so any of them could read Fuel's storage on that device. Remove the key in Fuel, and delete it on GitHub, when you stop using it.
+- The calendar file is public, like the rest of the site. It names meals and times; it does not state your calorie target or anything else about you.
 
-```
-node tools/build-reminders.mjs
-```
+Without a key, the subscription still works but keeps whatever the file in the repository says. If you added the reminders by hand with the first version of Fuel, delete that Meals calendar so they do not show up twice.
 
-Options: `--from 2026-12-01` for the first day, `--until 2027-03-31` for the last, `--kcal 1700` to pick snacks for a different calorie target. Commit the new file, delete the old Meals calendar on your phone, and add the reminders again.
+The reminders follow the two-week menu. They do not know about a meal you swap for a single day, so treat the app as the final word.
 
-If your calorie target in the app changes, set `planKcal` in `js/config.js` to match and rebuild; until then some snack reminders will name a different snack than the app.
+### Building the file by hand
 
-### Subscribing instead (not tested on a device)
-
-Calendar can also subscribe to the file, which gives the reminders their own calendar and picks up changes whenever you push a new `meal-reminders.ics`: open `webcal://YOUR-NAME.github.io/YOUR-REPO/meal-reminders.ics` in Safari. iPhones can strip alerts from subscribed calendars, so check the subscription's settings (Settings, Calendar, Accounts, Subscribed Calendars) and make sure **Remove Alarms** is off.
+`node tools/build-reminders.mjs` builds the same file from the times in `js/config.js` and the built-in meals (needs Node 18 or newer, no packages; options `--from`, `--until` and `--kcal`). It does not know about changes made in the app, so once Fuel looks after the file, use the app: running the tool and pushing would put the original times and meals back.
 
 ## Grocery list
 
 Open **Plan > Grocery list**. The app adds up the ingredients of your planned meals for the next 3, 7 or 14 days, turns them into things you buy, prices them, and compares the total with a budget if you set one.
 
-- **Shopping at.** Pick the store. Ten chains are listed (Walmart, Target, Trader Joe's, Whole Foods, Raley's, Bel Air, Safeway, Costco, Sprouts, WinCo) and you can add your own. The store decides which of your recorded prices apply, and which store brand the app points you to.
+- **Shopping at.** Pick the store. Ten chains are listed (Walmart, Target, Trader Joe's, Whole Foods, Raley's, Bel Air, Safeway, Costco, Sprouts, WinCo) and you can add your own, or hide the ones you do not use under **Settings > Stores**. The store decides which of your recorded prices apply, and which store brand the app points you to.
 - **Budget for this trip.** What you want to spend. When the list comes to more, the app lists the changes that bring it under and makes them when you tap. Nothing changes until you do.
 - **Brand.** Tap an item to choose a brand for it. "Lowest price" is the default. Switch on "Keep this brand" and the budget suggestions never touch it. Use that for a brand you buy because you have checked it is safe for you.
 - **A price you paid.** Tap an item and enter the brand, package size and price. It is saved for the store you are shopping at and replaces the typical price there.
+- **Typical prices.** To change the price used wherever you have not recorded one, open **Settings > Grocery prices**. Any item can go back to the price list's price.
 - **Ticking off.** Tick items as they go in the cart. **Mark what I have** is for food already in your kitchen.
 - **Each dinner feeds.** Multiplies dinner ingredients when you cook for more people. Breakfasts, lunches and snacks stay single portions.
 
@@ -93,7 +95,7 @@ The list is worked out by fixed rules in `js/grocery.js`. Nothing is random, not
 
 ### Changing the price list
 
-`data/groceries.json` holds the stores, what each ingredient is bought as, and the typical prices. The app pulls it every time it opens, so an edit you push to GitHub shows up on the next launch. The note at the top of the file explains each field. To change a typical price, edit `price`; to add a store, add a line to `stores`. To keep the list somewhere else, point `grocery.priceList` in `js/config.js` at it.
+Typical prices and the stores shown can be changed in the app, under **Settings**; those changes stay on your device. `data/groceries.json` is the price list they start from: the stores, what each ingredient is bought as, and the typical prices. The app pulls it every time it opens, so an edit you push to GitHub shows up on the next launch. The note at the top of the file explains each field. To change a typical price, edit `price`; to add a store, add a line to `stores`. To keep the list somewhere else, point `grocery.priceList` in `js/config.js` at it.
 
 If you add an ingredient to `js/foods.js`, add it to an item's `foods` in the price list too. `node tools/check-plan.mjs` fails when a meal uses something the price list does not buy.
 
@@ -105,7 +107,17 @@ If you add an ingredient to `js/foods.js`, add it to an item's `foods` in the pr
 
 ## Changing the plan
 
-- `js/meals.js` holds every meal: ingredients in grams, how to measure them, and the method. It also holds the two-week rotation of breakfasts, lunches and dinners.
+All of this is changed in the app, under **Settings**:
+
+- **Your plan**: daily calories and protein, starting and goal weight, goal date, BMR and Move calories. **Work out calories from these numbers** recalculates the target.
+- **Meal times**: when each meal is. Today, the plan and the reminders follow them.
+- **Meals**: change the amounts in any meal (the numbers update as you type), its name or its method; add meals of your own, from ingredients or from totals off a menu or label; keep a snack out of the automatic picks. Any built-in meal can be put back.
+- **Two-week menu**: which breakfast, lunch and dinner fall on each day. **Swap** on the Plan tab can also change every other week instead of a single day.
+- **Grocery prices** and **Stores**: see the grocery list section above.
+
+Those changes are saved on your device and are part of a backup. They are laid over the built-in plan, which stays in the code as the starting point:
+
+- `js/meals.js` holds the built-in meals: ingredients in grams, how to measure them, and the method. It also holds the original two-week rotation of breakfasts, lunches and dinners.
 - `js/foods.js` holds nutrition per 100 g for each ingredient. Calories and macros are added up from it when the app loads, so changing an amount in a meal updates every number.
 - Snacks are not in the rotation. Each day the app picks the snack that best fills the calories the three meals leave, working through the snack list in order. At targets of roughly 2,000 kcal and up it adds a morning snack.
 
@@ -117,7 +129,7 @@ node tools/check-plan.mjs 1600   # the same at another calorie target
 node --test                      # the logic tests
 ```
 
-**Allergens.** The plan contains no peanuts or tree nuts, and both the check script and the tests fail if a nut appears in a food, an ingredient line, a meal name, a method or the grocery price list. The list of words that count as a nut is in `js/allergens.js`. The hummus and the sesame oil contain sesame, and a few recipes use chia seeds. Packaged foods can carry nut warnings whatever the recipe says, so read the labels on protein powder, oats, bread, tortillas, hummus, seasoning mixes and sauces.
+**Allergens.** The plan contains no peanuts or tree nuts, and both the check script and the tests fail if a nut appears in a food, an ingredient line, a meal name, a method or the grocery price list. The list of words that count as a nut is in `js/allergens.js`. In the app, a meal you name or describe with one of those words gets a warning, and saving it takes a second tap. The hummus and the sesame oil contain sesame, and a few recipes use chia seeds. Packaged foods can carry nut warnings whatever the recipe says, so read the labels on protein powder, oats, bread, tortillas, hummus, seasoning mixes and sauces.
 
 ## How the numbers are worked out
 
@@ -131,7 +143,7 @@ All of this is estimation. Watch calorie counts and food labels are both rough, 
 
 ## Your data
 
-Your settings, log, weigh-ins and grocery choices are saved in the browser's storage on your device and nowhere else. **Settings > Backup** saves everything to a file and restores it. Make a backup now and then, and before deleting the app from your Home Screen, because that deletes its data.
+Your settings, log, weigh-ins, meal changes and grocery choices are saved in the browser's storage on your device and nowhere else. The one thing that leaves it is the reminders file, which Fuel writes to your repository if you connect a GitHub key (see Meal reminders); the key itself stays on the device. **Settings > Backup** saves everything except the key to a file and restores it. Make a backup now and then, and before deleting the app from your Home Screen, because that deletes its data.
 
 ## Files
 
@@ -139,14 +151,15 @@ Your settings, log, weigh-ins and grocery choices are saved in the browser's sto
 index.html              the page
 css/app.css             styles
 js/app.js               screens and taps
-js/core.js              dates, targets, the daily plan, pace check, calendar file
+js/core.js              dates, targets, meal times, the daily plan, pace check, calendar file
 js/grocery.js           the grocery list: needs, stock, products, budget
+js/publish.js           writing the reminders file to GitHub
 js/allergens.js         the words the nut checks look for
 js/store.js             saving and loading on the device
 js/chart.js             the weight chart
-js/meals.js             meals and the two-week rotation
-js/foods.js             nutrition per 100 g
-js/config.js            meal times, reminder settings, where the price list is
+js/meals.js             built-in meals and rotation, with your changes laid over them
+js/foods.js             nutrition per 100 g, and each food's name on screen
+js/config.js            the original meal times, reminder settings, where the price list is
 data/groceries.json     stores, what each ingredient is bought as, typical prices
 sw.js                   offline support
 manifest.webmanifest    Home Screen name and icons

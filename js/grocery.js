@@ -256,6 +256,27 @@ export function readCatalog(raw) {
   };
 }
 
+/**
+ * The price list with the typical prices you set on this device laid over it.
+ * An item's own price replaces all of its typical prices. Returns the catalog
+ * unchanged when there is nothing to lay over it.
+ */
+export function withTypical(catalog, overrides = {}) {
+  const changed = Object.entries(isObject(overrides) ? overrides : {}).filter(([id, price]) => catalog.itemById.has(id) && isObject(price));
+  if (!changed.length) return catalog;
+  const prices = Object.fromEntries(changed);
+  const items = catalog.items.map((item) => {
+    const offer = prices[item.id] ? makeOffer(item, prices[item.id]) : null;
+    return offer ? { ...item, typical: [{ ...offer, src: 'yours', note: '' }], typicalChanged: true } : item;
+  });
+  const itemById = new Map(items.map((item) => [item.id, item]));
+  const itemForFood = new Map();
+  for (const item of items) {
+    for (const [food, factor] of Object.entries(item.foods)) itemForFood.set(food, { item, factor });
+  }
+  return { ...catalog, items, itemById, itemForFood, sources: { ...catalog.sources, yours: 'A typical price you set in the app' } };
+}
+
 /** The price list's stores followed by any you added yourself. */
 export function allStores(catalog, custom = []) {
   const stores = [...catalog.stores];
@@ -269,8 +290,15 @@ export function allStores(catalog, custom = []) {
   return stores;
 }
 
-export function findStore(catalog, custom, id) {
-  const stores = allStores(catalog, custom);
+/** The stores to offer: all of them except the ones you hid. Never none. */
+export function shownStores(catalog, custom = [], hidden = []) {
+  const all = allStores(catalog, custom);
+  const shown = all.filter((store) => !hidden.includes(store.id));
+  return shown.length ? shown : all;
+}
+
+export function findStore(catalog, custom, id, hidden = []) {
+  const stores = shownStores(catalog, custom, hidden);
   return stores.find((s) => s.id === id) || stores[0];
 }
 
@@ -599,8 +627,8 @@ function quantityText(item, filled, planGrams) {
  * is what to buy and need is what the meals use in all.
  * checked: ids ticked today.
  */
-export function buildList({ catalog, customStores = [], storeId, needs, prefs = {}, offers = [], checked = [] }) {
-  const store = findStore(catalog, customStores, storeId);
+export function buildList({ catalog, customStores = [], hiddenStores = [], storeId, needs, prefs = {}, offers = [], checked = [] }) {
+  const store = findStore(catalog, customStores, storeId, hiddenStores);
   const recordedByItem = readRecorded(catalog, offers);
   const ticked = new Set(checked);
   const lines = [];
@@ -686,6 +714,8 @@ function assemble(input, days, opening) {
     days: input.days,
     meals,
     unmapped: [...new Set(days.flatMap((day) => day.unmapped))].sort(),
+    // Meals of yours entered as numbers have no ingredients to buy.
+    numbersOnly: [...new Set(meals.filter(({ meal }) => meal.numbersOnly).map(({ meal }) => meal.name))].sort(),
     seasonings: seasoningsFor(meals),
   };
 }
@@ -753,7 +783,7 @@ export function fitBudget(input) {
   if (total > budgetCents && !shopping) {
     const { catalog, kcalFor, logged = {} } = input;
     const proteinFor = input.proteinFor || (() => 0);
-    const store = findStore(catalog, input.customStores, input.storeId);
+    const store = findStore(catalog, input.customStores, input.storeId, input.hiddenStores);
     const recordedByItem = readRecorded(catalog, input.offers);
     const pools = new Map(catalog.items.map((item) => [
       item.id,
@@ -785,7 +815,8 @@ export function fitBudget(input) {
           if (eaten.includes(slot)) continue;
           const current = before.slots.find((s) => s.slot === slot).meal;
           for (const alt of mealsForSlot(slot)) {
-            if (alt.id === current.id) continue;
+            // A meal entered as numbers has nothing to buy, so it would always look cheapest.
+            if (alt.id === current.id || alt.numbersOnly) continue;
             const nextDoor = [addDays(date, -1), addDays(date, 1)].some((d) => chosen.has(d) && chosen.get(d)[slot] === alt.id);
             const already = days.filter((day) => chosen.get(day.date)[slot] === alt.id).length;
             if (nextDoor || already >= MAX_REPEATS) continue;

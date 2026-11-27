@@ -1,16 +1,15 @@
 // Settings that live in the repo rather than on your phone.
 //
-// The app and the calendar reminders both read meal times from here, so they
-// always agree. After changing anything in this file, rebuild the reminders:
-//
-//     node tools/build-reminders.mjs
-//
-// then commit the new meal-reminders.ics and add it to your calendar again.
+// These are starting points. Meal times can be changed in the app under
+// Settings > Meal times, and the app rewrites the reminders file itself once
+// it has a GitHub key (Settings > Meal reminders). Change them here only to
+// change what a fresh install starts with; tools/build-reminders.mjs builds
+// the reminders from these values.
 
 export const CONFIG = {
   appName: 'Fuel',
 
-  // 24-hour clock, local time.
+  // 24-hour clock, local time. The times until changed in the app.
   mealTimes: {
     breakfast: '07:30',
     morningSnack: '10:00', // only used on days with a second snack (targets around 2,000 kcal and up)
@@ -20,11 +19,10 @@ export const CONFIG = {
   },
 
   reminders: {
-    // The daily calorie target the calendar file is built for. It decides
-    // which snack each day's reminder names. Match it to the target shown in
-    // the app (Settings) if that changes.
+    // For tools/build-reminders.mjs only: the calorie target it picks snacks
+    // for, and the last day the reminders repeat. The app uses your own
+    // target and goal date instead.
     planKcal: 1800,
-    // Last day the reminders repeat.
     until: '2027-03-31',
   },
 

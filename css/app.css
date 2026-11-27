@@ -889,7 +889,11 @@ svg {
 
 input[type="text"],
 input[type="number"],
-input[type="date"] {
+input[type="date"],
+input[type="time"],
+input[type="search"],
+input[type="password"],
+textarea {
   display: block;
   width: 100%;
   min-height: 48px;
@@ -1535,6 +1539,233 @@ select {
   color: var(--sheet);
 }
 
+/* ---------- settings: lists of things to change ---------- */
+
+textarea {
+  min-height: 7.5rem;
+  padding: 10px 12px;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+input[type="time"] {
+  text-align: left;
+}
+
+input[type="time"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.rows {
+  border-top: 1px solid var(--rule);
+}
+
+button.log-row {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.method {
+  white-space: pre-line;
+}
+
+.switch small {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.pace--ok h2 svg {
+  color: var(--ink);
+}
+
+.reasons {
+  margin: 0 0 12px;
+  padding-left: 1.2rem;
+}
+
+.reasons li + li {
+  margin-top: 4px;
+}
+
+/* Two choices that exclude each other, like a printed tick-box pair. */
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 0 14px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.segmented button {
+  min-height: 44px;
+  padding: 6px 8px;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 700 0.9rem/1.2 var(--font-body);
+  cursor: pointer;
+}
+
+.segmented button + button {
+  border-left: 2px solid var(--ink);
+}
+
+.segmented button[aria-checked="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.form .segmented {
+  margin: 0;
+}
+
+/* The meal editor */
+.label--live {
+  margin: 0 0 16px;
+}
+
+.label__row--split {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.label--live .label__line {
+  margin: 6px 0 0;
+}
+
+.edit-items {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.edit-items legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.edit-items ul {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.edit-items li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.5rem 44px;
+  align-items: center;
+  column-gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.edit-items__name {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.edit-items__name small {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-2);
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+.edit-items__name small:empty {
+  display: none;
+}
+
+.edit-items__amount {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-items__amount input {
+  padding: 0 8px;
+  text-align: right;
+}
+
+.edit-items__amount span {
+  color: var(--ink-2);
+}
+
+.edit-items__tools {
+  display: grid;
+  gap: 10px;
+}
+
+.edit-items__tools > .btn {
+  width: 100%;
+}
+
+/* A ruled section right after a button, a note or a list needs room above its rule. */
+#app > :not(section):not(.page-head):not(.back) + section {
+  margin-top: 24px;
+}
+
+/* The two-week menu */
+.menu-week {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 10px 0 4px;
+}
+
+.menu-week span {
+  color: var(--ink-2);
+  font: 400 0.9rem var(--font-body);
+}
+
+.menu-day {
+  margin-bottom: 10px;
+}
+
+.menu-day h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.menu-day__over {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  color: var(--over);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.menu-day__over svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
 /* ---------- toast ---------- */
 
 .toast {
@@ -1576,4 +1807,8 @@ select {
     animation: none !important;
     transition: none !important;
   }
+}
+
+#draft-warn:empty {
+  display: none;
 }

@@ -787,7 +787,7 @@ test('saved grocery choices survive a round trip and junk is dropped', () => {
   assert.equal(old.log.length, 1);
   assert.equal(old.weights.length, 1);
   assert.deepEqual(old.swaps, { [DAY_ONE]: { dinner: 'd-cod' } });
-  assert.deepEqual(old.grocery, { store: null, days: 7, budget: null, servings: 1, prefs: {}, offers: [], lots: [], stores: [] });
+  assert.deepEqual(old.grocery, { store: null, days: 7, budget: null, servings: 1, prefs: {}, offers: [], lots: [], stores: [], typical: {}, hidden: [] });
 
   const grocery = {
     store: 'target', days: 14, budget: 135.5, servings: 4,
@@ -795,6 +795,8 @@ test('saved grocery choices survive a round trip and junk is dropped', () => {
     offers: [{ id: 'p', item: 'greek-yogurt', store: 'target', brand: 'Fage', unit: 'oz', size: 32, price: 6.99, date: DAY_ONE }],
     lots: [{ id: 'l', item: 'whey', date: DAY_ONE, grams: 907, until: null, home: true, skip: ['breakfast'] }],
     stores: [{ id: 'my-corner', name: 'Corner Market', brand: '' }],
+    typical: { oats: { unit: 'oz', size: 42, price: 3.98 } },
+    hidden: ['costco'],
   };
   assert.deepEqual(normalizeState({ grocery }).grocery, grocery);
   assert.deepEqual(normalizeState(JSON.parse(JSON.stringify(normalizeState({ grocery })))).grocery, grocery);
